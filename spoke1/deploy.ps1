@@ -5,7 +5,7 @@ Param (
     [Parameter(HelpMessage = "Deployment target resource group location")] 
     [string] $Location = "North Europe",
 
-    [string] $Template = "azuredeploy.json"
+    [string] $Template = "$PSScriptRoot\main.json"
 )
 
 $ErrorActionPreference = "Stop"
