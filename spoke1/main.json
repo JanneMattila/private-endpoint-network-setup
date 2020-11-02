@@ -9,6 +9,9 @@
     "hubResourceId": {
       "type": "string"
     },
+    "hubPrivateDNSZoneTableResourceId": {
+      "type": "string"
+    },
     "addressPrefix": {
       "type": "string",
       "defaultValue": "10.1.0.0/16"
@@ -94,6 +97,25 @@
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+      "apiVersion": "2020-03-01",
+      "name": "[format('{0}/storagednszonegroup', 'privatelink-to-table')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "privateDnsZoneConfigs": [
+          {
+            "name": "spoke1table",
+            "properties": {
+              "privateDnsZoneId": "[parameters('hubPrivateDNSZoneTableResourceId')]"
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/privateEndpoints', 'privatelink-to-table')]"
       ]
     }
   ],
