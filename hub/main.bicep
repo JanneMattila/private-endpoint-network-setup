@@ -58,7 +58,7 @@ resource vnetResource 'Microsoft.Network/virtualNetworks@2020-06-01' = {
 }
 
 resource vnetPeeringToSpoke1Resource 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-06-01' = {
-  name: 'hub-to-spoke1'
+  name: '${vnetResource.name}/hub-to-spoke1'
   // https://github.com/Azure/bicep/issues/186
   // Condition is not yet implemented
   // condition: false
