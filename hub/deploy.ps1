@@ -1,6 +1,6 @@
 Param (
     [Parameter(HelpMessage = "Deployment target resource group")] 
-    [string] $ResourceGroupName = "rg-hub",
+    [string] $ResourceGroupName = "rg-pedemo-hub",
 
     [Parameter(HelpMessage = "Deployment target resource group location")] 
     [string] $Location = "North Europe",
@@ -33,7 +33,7 @@ if ($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -Location $Location 
 
 # Additional parameters that we pass to the template deployment
 $additionalParameters = New-Object -TypeName hashtable
-$additionalParameters['spoke1ResourceId'] = (Get-AzVirtualNetwork -Name "vnet-spoke1" -ResourceGroupName "rg-spoke1").Id
+$additionalParameters['spoke1ResourceId'] = (Get-AzVirtualNetwork -Name "vnet-spoke1" -ResourceGroupName "rg-pedemo-spoke1").Id
 
 $result = New-AzResourceGroupDeployment `
     -DeploymentName $deploymentName `

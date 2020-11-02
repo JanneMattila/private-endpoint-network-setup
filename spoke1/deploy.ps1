@@ -1,6 +1,6 @@
 Param (
     [Parameter(HelpMessage = "Deployment target resource group")] 
-    [string] $ResourceGroupName = "rg-spoke1",
+    [string] $ResourceGroupName = "rg-pedemo-spoke1",
 
     [Parameter(HelpMessage = "Deployment target resource group location")] 
     [string] $Location = "North Europe",
@@ -33,8 +33,8 @@ if ($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -Location $Location 
 
 # Additional parameters that we pass to the template deployment
 $additionalParameters = New-Object -TypeName hashtable
-$additionalParameters['hubResourceId'] = (Get-AzVirtualNetwork -Name "vnet-hub" -ResourceGroupName "rg-hub").Id
-$additionalParameters['hubPrivateDNSZoneTableResourceId'] = (Get-AzPrivateDnsZone -Name "privatelink.table.core.windows.net" -ResourceGroupName "rg-hub").ResourceId
+$additionalParameters['hubResourceId'] = (Get-AzVirtualNetwork -Name "vnet-hub" -ResourceGroupName "rg-pedemo-hub").Id
+$additionalParameters['hubPrivateDNSZoneTableResourceId'] = (Get-AzPrivateDnsZone -Name "privatelink.table.core.windows.net" -ResourceGroupName "rg-pedemo-hub").ResourceId
 
 $result = New-AzResourceGroupDeployment `
     -DeploymentName $deploymentName `
