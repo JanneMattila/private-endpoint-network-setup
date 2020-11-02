@@ -33,7 +33,7 @@ if ($null -eq (Get-AzResourceGroup -Name $ResourceGroupName -Location $Location 
 
 # Additional parameters that we pass to the template deployment
 $additionalParameters = New-Object -TypeName hashtable
-#$additionalParameters['templateUrl'] = $templateUrl
+$additionalParameters['hubResourceId'] = (Get-AzVirtualNetwork -Name "vnet-hub" -ResourceGroupName "rg-hub").Id
 
 $result = New-AzResourceGroupDeployment `
     -DeploymentName $deploymentName `
