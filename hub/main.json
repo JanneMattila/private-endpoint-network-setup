@@ -39,6 +39,7 @@
         }
       },
       "dependsOn": [
+        "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDNSZoneName'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
       ]
     },

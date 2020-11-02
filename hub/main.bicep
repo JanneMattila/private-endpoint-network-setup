@@ -14,7 +14,7 @@ resource privateDNSZoneResource 'Microsoft.Network/privateDnsZones@2018-09-01'= 
 
 // Link Private DNS Zone to VNET
 resource privateDNSZoneLinkToVNETResource 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-01-01' = {
-  name: '${privateDNSZoneName}/${privateDNSZoneName}-link'
+  name: '${privateDNSZoneResource.name}/${privateDNSZoneResource.name}-link'
   location: 'global'
   properties: {
     registrationEnabled: false
