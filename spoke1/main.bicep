@@ -75,18 +75,18 @@ resource privateEndpointResource 'Microsoft.Network/privateEndpoints@2020-05-01'
 // Note: Complete deployment mode for network resources:
 // https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/complete-mode-deletion#microsoftnetwork
 resource privateDNSZoneGroupsResource 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2020-03-01' = {
-    name: '${privateEndpointResource.name}/storagednszonegroup'
-    location: location
-    properties: {
-      privateDnsZoneConfigs: [
-        {
-          name: 'spoke1table'
-          properties: {
-            privateDnsZoneId: hubPrivateDNSZoneTableResourceId
-          }
+  name: '${privateEndpointResource.name}/storagednszonegroup'
+  location: location
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: 'spoke1table'
+        properties: {
+          privateDnsZoneId: hubPrivateDNSZoneTableResourceId
         }
-      ]
-    }
+      }
+    ]
+  }
 }
 
 output vnet string = vnetResource.id

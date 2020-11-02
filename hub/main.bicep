@@ -1,6 +1,7 @@
 param location string = resourceGroup().location
 
 param spoke1ResourceId string = ''
+param spoke2ResourceId string = ''
 param addressPrefix string = '10.0.0.0/16'
 
 var vnetName = 'vnet-hub'
@@ -65,6 +66,18 @@ resource vnetPeeringToSpoke1Resource 'Microsoft.Network/virtualNetworks/virtualN
   properties: {
     remoteVirtualNetwork: {
       id: spoke1ResourceId
+    }
+  }
+}
+
+resource vnetPeeringToSpoke2Resource 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-06-01' = {
+  name: '${vnetResource.name}/hub-to-spoke2'
+  // https://github.com/Azure/bicep/issues/186
+  // Condition is not yet implemented
+  // condition: false
+  properties: {
+    remoteVirtualNetwork: {
+      id: spoke2ResourceId
     }
   }
 }

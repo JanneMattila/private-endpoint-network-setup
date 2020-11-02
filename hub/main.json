@@ -10,6 +10,10 @@
       "type": "string",
       "defaultValue": ""
     },
+    "spoke2ResourceId": {
+      "type": "string",
+      "defaultValue": ""
+    },
     "addressPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.0/16"
@@ -84,6 +88,19 @@
       "properties": {
         "remoteVirtualNetwork": {
           "id": "[parameters('spoke1ResourceId')]"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+      "apiVersion": "2020-06-01",
+      "name": "[format('{0}/hub-to-spoke2', variables('vnetName'))]",
+      "properties": {
+        "remoteVirtualNetwork": {
+          "id": "[parameters('spoke2ResourceId')]"
         }
       },
       "dependsOn": [
