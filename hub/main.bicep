@@ -1,7 +1,7 @@
 param location string = resourceGroup().location
 
-param storageAccountName string = 'pl100000002'
-param addressPrefix string = '10.0.0.0/15'
+param spoke1ResourceId string = ''
+param addressPrefix string = '10.0.0.0/16'
 
 var vnetName = 'vnet-hub'
 var privateDNSZoneName = 'privatelink.table.${environment().suffixes.storage}'
@@ -24,7 +24,7 @@ resource privateDNSZoneLinkToVNETResource 'Microsoft.Network/privateDnsZones/vir
   }
 }
 
-resource vnetResource 'Microsoft.Network/virtualNetworks@2018-10-01' = {
+resource vnetResource 'Microsoft.Network/virtualNetworks@2020-06-01' = {
   name: vnetName
   location: location
   properties: {
@@ -33,8 +33,6 @@ resource vnetResource 'Microsoft.Network/virtualNetworks@2018-10-01' = {
         addressPrefix
       ]
     }
-    enableVmProtection: false
-    enableDdosProtection: false
     subnets: [
       {
         name: 'subnet001'
@@ -56,6 +54,18 @@ resource vnetResource 'Microsoft.Network/virtualNetworks@2018-10-01' = {
         }
       }
     ]
+  }
+}
+
+resource vnetPeeringToSpoke1Resource 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-06-01' = {
+  name: 'hub-to-spoke1'
+  // https://github.com/Azure/bicep/issues/186
+  // Condition is not yet implemented
+  // condition: false
+  properties: {
+    remoteVirtualNetwork: {
+      id: spoke1ResourceId
+    }
   }
 }
 
