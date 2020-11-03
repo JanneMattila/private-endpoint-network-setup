@@ -7,6 +7,9 @@ param addressPrefix string = '10.0.0.0/16'
 var vnetName = 'vnet-hub'
 var privateDNSZoneName = 'privatelink.table.${environment().suffixes.storage}'
 
+var spoke1Exists = length(spoke1ResourceId) > 0
+var spoke2Exists = length(spoke2ResourceId) > 0
+
 // Private DNS Zone
 resource privateDNSZoneResource 'Microsoft.Network/privateDnsZones@2018-09-01'= {
   name: privateDNSZoneName
@@ -62,7 +65,7 @@ resource vnetPeeringToSpoke1Resource 'Microsoft.Network/virtualNetworks/virtualN
   name: '${vnetResource.name}/hub-to-spoke1'
   // https://github.com/Azure/bicep/issues/186
   // Condition is not yet implemented
-  // condition: false
+  // condition: spoke1Exists
   properties: {
     remoteVirtualNetwork: {
       id: spoke1ResourceId
@@ -74,7 +77,7 @@ resource vnetPeeringToSpoke2Resource 'Microsoft.Network/virtualNetworks/virtualN
   name: '${vnetResource.name}/hub-to-spoke2'
   // https://github.com/Azure/bicep/issues/186
   // Condition is not yet implemented
-  // condition: false
+  // condition: spoke2Exists
   properties: {
     remoteVirtualNetwork: {
       id: spoke2ResourceId

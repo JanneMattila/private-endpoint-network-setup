@@ -22,7 +22,9 @@
   "functions": [],
   "variables": {
     "vnetName": "vnet-hub",
-    "privateDNSZoneName": "[format('privatelink.table.{0}', environment().suffixes.storage)]"
+    "privateDNSZoneName": "[format('privatelink.table.{0}', environment().suffixes.storage)]",
+    "spoke1Exists": "[greater(length(parameters('spoke1ResourceId')), 0)]",
+    "spoke2Exists": "[greater(length(parameters('spoke2ResourceId')), 0)]"
   },
   "resources": [
     {
