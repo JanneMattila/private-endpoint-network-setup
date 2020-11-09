@@ -13,7 +13,34 @@ spoke networks.
 
 ## Step-by-step walkthrough
 
-*TBA*
+If you want to mimic typical Enterprise environment, then create 3 different
+service principals to your environment (here using simplified naming conventions):
+
+- `hub`: contributor in `rg-pedemo-hub` resource group
+- `spoke1`: contributor in `rg-pedemo-spoke1` resource group
+- `spoke2`: contributor in `rg-pedemo-spoke2` resource group
+
+You can use following code to login as service principal:
+
+```powershell
+$tenantId = "<your tenant id>"
+$clientID = "<your service principal Application (client) ID>"
+$clientSecret = "<your service principal secret>"
+$clientPassword = ConvertTo-SecureString $clientSecret -AsPlainText -Force
+$credentials = New-Object System.Management.Automation.PSCredential($clientID, $clientPassword)
+Login-AzAccount -Credential $credentials -ServicePrincipal -TenantId $tenantId
+
+# Verify correct context
+Get-AzSubscription
+```
+
+Now you can deploy `hub`:
+
+```powershell
+bicep build .\hub\main.bicep && .\hub\deploy.ps1
+```
+
+*TBC*
 
 ## Deploy example
 
