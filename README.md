@@ -26,6 +26,8 @@ and
 [Private DNS Zone](https://docs.microsoft.com/en-us/azure/dns/dns-protect-private-zones-recordsets).
 E.g. `spoke1` needs to update Private DNS Zone record set in `rg-pedemo-hub` and make VNet
 peering between spoke1 and hub VNets (same permissions apply for `spoke2`).
+You can choose to use e.g. `Network Contributor` role in your setup, if don't
+want to create custom role.
 
 You can use following code to login as service principal:
 
