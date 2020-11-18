@@ -20,6 +20,13 @@ service principals to your environment (here using simplified naming conventions
 - `spoke1`: contributor in `rg-pedemo-spoke1` resource group
 - `spoke2`: contributor in `rg-pedemo-spoke2` resource group
 
+On top of the contributor role you need to have additional permissions for service principals for
+[VNet peering](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-peering#permissions)
+and 
+[Private DNS Zone](https://docs.microsoft.com/en-us/azure/dns/dns-protect-private-zones-recordsets).
+E.g. `spoke1` needs to update Private DNS Zone record set in `rg-pedemo-hub` and make VNet
+peering between spoke1 and hub VNets (same permissions apply for `spoke2`).
+
 You can use following code to login as service principal:
 
 ```powershell
@@ -34,13 +41,8 @@ Login-AzAccount -Credential $credentials -ServicePrincipal -TenantId $tenantId
 Get-AzSubscription
 ```
 
-Now you can deploy `hub`:
-
-```powershell
-bicep build .\hub\main.bicep && .\hub\deploy.ps1
-```
-
-*TBC*
+Now you can use correct service principals for deploying
+their individual templates.
 
 ## Deploy example
 
