@@ -48,10 +48,6 @@ their individual templates.
 
 ## Deploy example
 
-*Note:* Since `condition` is not yet implemented in
-bicep you need to comment out the network peering in
-`hub/main.bicep` before the initial deployment:
-
 ```powershell
 bicep build .\hub\main.bicep && .\hub\deploy.ps1
 ```

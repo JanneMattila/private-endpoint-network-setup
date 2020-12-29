@@ -11,7 +11,7 @@ var spoke1Exists = length(spoke1ResourceId) > 0
 var spoke2Exists = length(spoke2ResourceId) > 0
 
 // Private DNS Zone
-resource privateDNSZoneResource 'Microsoft.Network/privateDnsZones@2018-09-01'= {
+resource privateDNSZoneResource 'Microsoft.Network/privateDnsZones@2018-09-01' = {
   name: privateDNSZoneName
   location: 'global'
 }
@@ -61,11 +61,8 @@ resource vnetResource 'Microsoft.Network/virtualNetworks@2020-06-01' = {
   }
 }
 
-resource vnetPeeringToSpoke1Resource 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-06-01' = {
+resource vnetPeeringToSpoke1Resource 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-06-01' = if (spoke1Exists) {
   name: '${vnetResource.name}/hub-to-spoke1'
-  // https://github.com/Azure/bicep/issues/186
-  // Condition is not yet implemented
-  // condition: spoke1Exists
   properties: {
     remoteVirtualNetwork: {
       id: spoke1ResourceId
@@ -73,11 +70,8 @@ resource vnetPeeringToSpoke1Resource 'Microsoft.Network/virtualNetworks/virtualN
   }
 }
 
-resource vnetPeeringToSpoke2Resource 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-06-01' = {
+resource vnetPeeringToSpoke2Resource 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2020-06-01' = if (spoke2Exists) {
   name: '${vnetResource.name}/hub-to-spoke2'
-  // https://github.com/Azure/bicep/issues/186
-  // Condition is not yet implemented
-  // condition: spoke2Exists
   properties: {
     remoteVirtualNetwork: {
       id: spoke2ResourceId
